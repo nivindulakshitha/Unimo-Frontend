@@ -11,8 +11,11 @@ import '../assets/css/Home.css'; // Ensure you have the correct path
 
 const Home = () => {
 	const location = useLocation();
-	localStorage.setItem('userData', JSON.stringify(location.state || {}));
+	if (location.state) {
+		localStorage.setItem('userData', JSON.stringify(location.state));
+	}
 	const userData = JSON.parse(localStorage.getItem('userData'));
+	console.log(userData);
 	//userData.role = "Admin"; // Temporary hardcoded user data for development
 
 	// Temporary hardcoded user data for development
