@@ -8,6 +8,7 @@ import { newApiRequest } from '../utils/apiRequests';
 import { formatDistanceToNow } from 'date-fns';
 import CountUp from 'react-countup'
 import locale from 'antd/es/date-picker/locale/en_US';
+const apiUrl = import.meta.env.VITE_DB_URI;
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -127,7 +128,7 @@ const AdminDashboard = ({ userId, userName }) => {
 		let draftData = {};
 
 		for (let location of locationsList) {
-			newApiRequest(`http://localhost:3000/api/${routeFix[location]}/status`, 'POST', { "location": location })
+			newApiRequest(`${apiUrl}/api/${routeFix[location]}/status`, 'POST', { "location": location })
 				.then(response => {
 					if (response.success) {
 						// Set the data for each location: nivindulakshitha
@@ -156,7 +157,7 @@ const AdminDashboard = ({ userId, userName }) => {
 		let totalEntrances = 0;
 		let totalDays = 0;
 
-		newApiRequest(`http://localhost:3000/api/library/history`, 'GET', {})
+		newApiRequest(`${apiUrl}/api/library/history`, 'GET', {})
 			.then(response => {
 				if (response.success) {
 					// Set the data for library: nivindulakshitha
@@ -244,7 +245,7 @@ const AdminDashboard = ({ userId, userName }) => {
 		let totalEntrances = 0;
 		let totalDays = 0;
 
-		newApiRequest(`http://localhost:3000/api/medical-center/history`, 'GET', {})
+		newApiRequest(`${apiUrl}/api/medical-center/history`, 'GET', {})
 			.then(response => {
 				if (response.success) {
 					// Set the data for library: nivindulakshitha

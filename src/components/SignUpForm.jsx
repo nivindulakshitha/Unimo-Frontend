@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import '../assets/css/Signup.css';
 import RegistrationSuccessPopup from '../components/RegistrationSuccessPopup';
+const apiUrl = import.meta.env.VITE_DB_URI;
 
 const RegistrationComponent = ({ onSwitchToLogin }) => {
 	const [form, setForm] = useState({
@@ -86,14 +87,14 @@ const RegistrationComponent = ({ onSwitchToLogin }) => {
 		}
 
 		try {
-			const response = await axios.post('http://localhost:3000/api/auth/register', formData, {
+			const response = await axios.post(`${apiUrl}/api/auth/register`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
 			});
 
 			console.log('Backend POST Request Details:', {
-				url: 'http://localhost:3000/api/auth/register',
+				url: `${apiUrl}/api/auth/register`,
 				method: 'POST',
 				headers: {
 					'Content-Type': 'multipart/form-data',

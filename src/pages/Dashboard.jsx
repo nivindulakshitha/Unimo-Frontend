@@ -6,6 +6,7 @@ import '../assets/css/Dashboard.css'; // Ensure you have the correct path
 import FooterComponent from '../components/FooterComponent'; // Adjust the path as needed
 import { newApiRequest } from '../utils/apiRequests';
 import { formatDistanceToNow } from 'date-fns';
+const apiUrl = import.meta.env.VITE_DB_URI;
 
 const { Content } = Layout;
 const { Text, Title, Link } = Typography;
@@ -42,7 +43,7 @@ const Dashboard = ({ userId, userName }) => {
 		let draftData = {};
 
 		for (let location of locationsList) {
-			newApiRequest(`http://localhost:3000/api/${routeFix[location]}/status`, 'POST', { "location": location })
+			newApiRequest(`${apiUrl}/api/${routeFix[location]}/status`, 'POST', { "location": location })
 				.then(response => {
 					if (response.success) {
 						draftData[location] = {}
@@ -84,7 +85,7 @@ const Dashboard = ({ userId, userName }) => {
 		}
 
 		// Submit the traffic to the database according to the respective canteen: nivindulakshitha
-		const request = await newApiRequest(`http://localhost:3000/api/canteen/report`, 'POST', { userId, canteen, peopleRange });
+		const request = await newApiRequest(`${apiUrl}/api/canteen/report`, 'POST', { userId, canteen, peopleRange });
 		if (request.success) {
 			console.log('Data submitted successfully:', request);
 			message.success('Data submitted successfully');

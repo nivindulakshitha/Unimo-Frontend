@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/LoginForm.css';
+const apiUrl = import.meta.env.VITE_DB_URI;
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const LoginForm = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', {
+            const response = await axios.post(`${apiUrl}/api/auth/login`, {
                 email,
                 password
             }, {

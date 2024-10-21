@@ -7,6 +7,7 @@ import FooterComponent from '../components/FooterComponent'; // Adjust the path 
 import { newApiRequest } from '../utils/apiRequests';
 import { formatDistanceToNow } from 'date-fns';
 import RankingBox from '../components/RankingBox';
+const apiUrl = import.meta.env.VITE_DB_URI;
 
 const { Content } = Layout;
 const { Text, Title, Link } = Typography;
@@ -113,7 +114,7 @@ const Dashboard = ({ userId, userName }) => {
 		let draftData = {};
 
 		for (let location of locationsList) {
-			newApiRequest(`http://localhost:3000/api/${routeFix[location]}/status`, 'POST', { "location": location })
+			newApiRequest(`${apiUrl}/api/${routeFix[location]}/status`, 'POST', { "location": location })
 				.then(response => {
 					if (response.success) {
 						// Set the data for each location: nivindulakshitha
@@ -138,7 +139,7 @@ const Dashboard = ({ userId, userName }) => {
 
 	// Fetch the badges data for the user: nivindulakshitha
 	useEffect(() => {
-		newApiRequest(`http://localhost:3000/api/votes/get`, 'POST', { "userId": userId })
+		newApiRequest(`${apiUrl}/api/votes/get`, 'POST', { "userId": userId })
 			.then(response => {
 				if (response.success) {
 					setUserBadges(response.data);
@@ -153,7 +154,7 @@ const Dashboard = ({ userId, userName }) => {
 	let userVotes = {}
 	// Fetch the rankings data for the user: nivindulakshitha
 	useEffect(() => {
-		newApiRequest(`http://localhost:3000/api/votes/all`, 'GET', {})
+		newApiRequest(`${apiUrl}/api/votes/all`, 'GET', {})
 			.then(async response => {
 				if (response.success) {
 					const allUsers = response.data;
@@ -173,7 +174,7 @@ const Dashboard = ({ userId, userName }) => {
 					let draftTopThree = {};
 					rankingBoard.map(user => {
 
-						newApiRequest(`http://localhost:3000/api/user/`, 'POST', { userId: user.userId })
+						newApiRequest(`${apiUrl}/api/user/`, 'POST', { userId: user.userId })
 							.then(response => {
 								response.entries = user.votes;
 								if (firstThreeVotes.includes(user)) {
@@ -218,7 +219,7 @@ const Dashboard = ({ userId, userName }) => {
 		}
 
 		// Submit the traffic to the database according to the respective canteen: nivindulakshitha
-		const request = await newApiRequest(`http://localhost:3000/api/canteen/report`, 'POST', { userId, canteen, peopleRange });
+		const request = await newApiRequest(`${apiUrl}/api/canteen/report`, 'POST', { userId, canteen, peopleRange });
 		if (request.success) {
 			message.success('Data submitted successfully');
 		} else {
